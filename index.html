@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Halloween Countdown</title>
+<style>
+  /* Embed CCMonsterMash font via Base64 */
+  @font-face {
+    font-family: 'CCMonsterMash';
+    src: url(data:font/truetype;charset=utf-8;base64,AAEAAAALAIAAAwAwT1MvMg8S...replace-with-your-base64...) format('truetype');
+  }
+
+  body {
+    margin: 0;
+    background-color: #000;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  #halloween-countdown-section {
+    text-align: center;
+    margin: 40px auto;
+    padding: 40px 20px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 16px;
+    box-shadow: 0 0 25px rgba(255,117,24,0.3);
+    max-width: 700px;
+  }
+
+  #halloween-countdown-section h2 {
+    font-family: 'CCMonsterMash', cursive;
+    font-size: 2.8rem;
+    color: #ff7518;
+    text-shadow: 0 0 15px #ff7518, 0 0 30px #ff3b00;
+    margin-bottom: 1.5rem;
+    animation: flicker 2.5s infinite alternate;
+  }
+
+  #halloween-countdown-section .countdown {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  #halloween-countdown-section .unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255,117,24,0.1);
+    padding: 14px 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,117,24,0.2);
+    box-shadow: 0 0 10px rgba(255,117,24,0.2) inset;
+    min-width: 80px;
+  }
+
+  #halloween-countdown-section .num {
+    font-size: 2.8rem;
+    color: #fff;
+    text-shadow: 0 0 10px #ff7518;
+  }
+
+  #halloween-countdown-section .label {
+    color: #ffb57f;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 6px;
+  }
+
+  @keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+    20%, 24%, 55% { opacity: 0.6; }
+  }
+</style>
+</head>
+<body>
+<div id="halloween-countdown-section">
+  <h2>🎃 Halloween Countdown 🎃</h2>
+  <div class="countdown">
+    <div class="unit"><div class="num" id="days">00</div><div class="label">Days</div></div>
+    <div class="unit"><div class="num" id="hours">00</div><div class="label">Hours</div></div>
+    <div class="unit"><div class="num" id="minutes">00</div><div class="label">Minutes</div></div>
+    <div class="unit"><div class="num" id="seconds">00</div><div class="label">Seconds</div></div>
+  </div>
+</div>
+
+<script>
+function updateCountdown() {
+  var now = new Date();
+  var year = now.getFullYear();
+  var halloween = new Date(year, 9, 31, 0, 0, 0); // Oct 31
+
+  if (now > halloween) {
+    halloween.setFullYear(year + 1);
+  }
+
+  var diff = halloween - now;
+  var d = Math.floor(diff / (1000 * 60 * 60 * 24));
+  var h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  var m = Math.floor((diff / (1000 * 60)) % 60);
+  var s = Math.floor((diff / 1000) % 60);
+
+  var daysEl = document.getElementById("days");
+  var hoursEl = document.getElementById("hours");
+  var minutesEl = document.getElementById("minutes");
+  var secondsEl = document.getElementById("seconds");
+
+  if (daysEl) daysEl.textContent = d;
+  if (hoursEl) hoursEl.textContent = String(h).padStart(2,"0");
+  if (minutesEl) minutesEl.textContent = String(m).padStart(2,"0");
+  if (secondsEl) secondsEl.textContent = String(s).padStart(2,"0");
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>
